@@ -164,22 +164,21 @@ alldone:
 
 .proc fadein
     DEC palette_temp 
-
     LDA palette_temp
     BEQ :+
     RTS
 :
-
     LDA palette_interval
-    BNE :+
+    BNE no_prep
+    LDY #0
+:
     LDA (palette_pointer), Y                ; get the low nibble, and store it into the buffer. 
     AND #%00001111
     STA bgpalettes, Y
     INY 
     CPY #$20
     BNE :-
-
-:
+no_prep:
     LDA palette_interval
     BEQ done_interval
 
@@ -196,14 +195,14 @@ check_bg:
     STA bgpalettes, Y
     INY 
     CPY #$10
-    BEQ :+
+    BEQ :++
     JMP check_bg
 :
     INY 
     CPY #$10
     BEQ :+
     JMP check_bg
-
+:
     LDY #$10
     LDX #0
 check_spr_color:
@@ -238,7 +237,7 @@ done_interval:
 alldone:
     LDA #0
     STA palette_interval
-    LDA flags
+    LDA flags 
     EOR #PAL_FADEIN 
     STA flags
     RTS
