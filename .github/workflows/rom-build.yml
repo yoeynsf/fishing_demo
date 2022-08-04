@@ -1,0 +1,20 @@
+name: rom-build
+on: push
+
+jobs:
+  rom-build:
+    runs-on: windows-2019
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup dependencies
+        shell: bash
+        run: echo TODO somehow get CC65 dependencies here
+
+      - name: Run build script
+        run:  call make.bat
+
+      - name: Upload ROM binary
+        uses: actions/upload-artifact@v1
+        with:
+          name: fish-rom
+          path: output
