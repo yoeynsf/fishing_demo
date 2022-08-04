@@ -1,9 +1,15 @@
 NMI:
-    PHA         
+    PHA
+    LDA DoNMI
+    BNE NoSkipNMI
+    
+NoSkipNMI:
+    INC DoNMI   
     TYA        
     PHA       
     TXA
-    PHA         
+    PHA
+    PHP
 
 	LDA #$00            ;Set the OAM address to 0
     STA OAMADDR
@@ -51,10 +57,16 @@ poll_joy:
 	STA flags
 :
 
-	INC framecounter  
+	INC framecounter
+	
+	LDA #$00
+	STA DoNMI
+	PLP
 	PLA
-    TAX
-    PLA       
-    TAY
-    PLA        
-    RTI
+    	TAX
+    	PLA       
+    	TAY
+	
+SkipWholeNMI:
+    	PLA        
+    	RTI
