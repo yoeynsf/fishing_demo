@@ -13,14 +13,14 @@ temp_y  = temp + 1
     LDA joy_status
     AND #KEY_A 
     BEQ :+
-    LDX #8
+    LDX #4
     LDY #0
     JSR fadein_palette
 :
     LDA joy_status
     AND #KEY_B 
     BEQ :+
-    LDX #8
+    LDX #4
     JSR fadeout_palette
 :
 

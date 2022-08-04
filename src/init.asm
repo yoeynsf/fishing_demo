@@ -65,6 +65,30 @@ CLEARMEM:
     LDA #7 
     STA N163_CHR7    
 
+    LDA PPUSTATUS
+    LDA #$20
+    STA PPUADDR
+    LDA #$00
+    STA PPUADDR
+
+    LDA #<fish_nam
+    STA pointer
+    LDA #>fish_nam 
+    STA pointer + 1
+    JSR load_nametable
+
+    LDA PPUSTATUS
+    LDA #$24
+    STA PPUADDR
+    LDA #$00
+    STA PPUADDR
+
+    LDA #<blank_nam
+    STA pointer
+    LDA #>blank_nam 
+    STA pointer + 1
+    JSR load_nametable 
+
 ;everything is loaded, now to enable drawing
 	
 	CLI						; enable interrupts
