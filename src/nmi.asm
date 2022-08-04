@@ -1,10 +1,10 @@
 NMI:
     PHA
-    LDA DoNmi
+    LDA DoNMI
     BNE NoSkipNMI
     
 NoSkipNMI:
-    INC DoNmi   
+    INC DoNMI   
     TYA        
     PHA       
     TXA
