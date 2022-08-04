@@ -12,7 +12,6 @@ temp_y  = temp + 1
     JSR sprite_prep
 
 
-
     JSR clear_sprites
 	LDA framecounter
 wait_vblank:
