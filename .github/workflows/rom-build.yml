@@ -1,0 +1,20 @@
+name: rom-build
+on: push
+
+jobs:
+  rom-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup dependencies
+        shell: bash
+        run: sudo apt-get install cc65
+
+      - name: Run build script
+        run: bash make.bat
+
+      - name: Upload ROM binary
+        uses: actions/upload-artifact@v1
+        with:
+          name: fish-rom
+          path: output
