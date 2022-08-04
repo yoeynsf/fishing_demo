@@ -11,6 +11,7 @@ jobs:
         run: echo TODO somehow get CC65 dependencies here
 
       - name: Run build script
+        shell: cmd
         run:  make.bat
 
       - name: Upload ROM binary
