@@ -1,4 +1,3 @@
-.segment "BANK0"
 mainprep:
 
 
