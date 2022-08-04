@@ -34,26 +34,10 @@ CLEARMEM:
 	NOP 
 	LDA #%00000000 ; Increment by 1
 	STA PPUCTRL
-
-	LDY #$00			; palette init
-	LDX #$10
-:
-	LDA palette_data, Y
-	STA bgpalettes, Y
-	INY
-	DEX 
-	BNE :-
-	LDY #$00
-	LDX #$10
-:
-	LDA palette_data, X
-	STA sprpalettes, Y
-	INX
-	INY
-	CPY #$10
-	BNE :-
 	
-	JSR load_palettes
+    LDY #0
+	JSR load_palette_buffer
+    JSR load_palettes
 
 ; N163 INIT -------- ;
 
@@ -87,6 +71,7 @@ CLEARMEM:
 	
 	LDA #%10010000 			; enable NMI, and change background to use 2nd CHR set of tiles ($1000)
 	STA PPUCTRL				; enabling sprites and background for left-most 8 pixels
+    STA s_PPUCTRL
 	LDA #%00011110			; enable sprites and backgrounds in general
 	STA PPUMASK
 	STA s_PPUMASK

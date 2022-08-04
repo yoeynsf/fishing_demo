@@ -23,7 +23,13 @@ flags:                          .res 1  ; programmer flags
 timer:                          .res 1  ; yeah
 s_PPUCTRL:                      .res 1  ; shadow buffer for PPU regs
 s_PPUMASK:                      .res 1
-DoNMI:                          .res 1	;DoNMI flag 
+
+; Palette Handler ;
+palette_timer:                  .res 1  ; argument into the fade routine. Stores the delay
+palette_pointer:                .res 2  ; pointer so the fade-in knows what colors to go to
+palette_interval:               .res 1
+palette_temp:                   .res 1  ; used by palette fade out timer
+palette_temp2:                  .res 1  ; palette fade in scratch space
 
 .segment "INTERNALRAM"
 bgpalettes:						.res 16
@@ -34,6 +40,7 @@ sprpalettes:					.res 16
 	.include "src/main.asm"
 	.include "src/nmi.asm"
 	.include "src/irq.asm"
+    .include "src/palette_fade.asm"
 	.include "src/subroutines.asm"
     .include "src/rodata.asm"
 

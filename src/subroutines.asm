@@ -1,27 +1,3 @@
-.proc load_palettes
-	LDA #$3F
-	STA PPUADDR 
-	LDA #$00
-	STA PPUADDR
-	LDX #$00
-    LDY #32
-:
-	LDA bgpalettes, X
-	STA PPUDATA
-	INX
-	DEY 
-	BNE :-
-	LDX #0
-    LDY #32
-:
-	LDA sprpalettes, X
-	STA PPUDATA
-	INX
-	DEX
-	BNE :-
-	RTS	
-.endproc
-
 .proc sprite_prep
 	LDA OAMposAtFrame
     CLC 

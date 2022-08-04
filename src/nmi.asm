@@ -51,6 +51,17 @@ poll_joy:
 	STA flags
 :
 
+    LDA flags
+	AND #PAL_FADEIN
+	BEQ :+
+	JSR fadein
+:
+	LDA flags
+	AND #PAL_FADEOUT
+	BEQ :+
+	JSR fadeout
+:	
+
 	INC framecounter
 	
 	PLA
