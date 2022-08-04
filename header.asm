@@ -24,6 +24,7 @@ flags:                          .res 1  ; programmer flags
 timer:                          .res 1  ; yeah
 s_PPUCTRL:                      .res 1  ; shadow buffer for PPU regs
 s_PPUMASK:                      .res 1
+DoNMI                           .res 1	;DoNMI flag 
 
 .segment "INTERNALRAM"
 bgpalettes:						.res 16
