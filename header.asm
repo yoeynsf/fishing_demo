@@ -1,13 +1,12 @@
 .include "src/defines.inc"
 
-.segment "HEADER" ; NROM
-	.byte "NES"
-	.byte $1A
-	.byte $02  ; 2 * 16KB PRG ROM
-	.byte $01  ; 1 * 8KB CHR ROM
-	.byte %00000010 ; mapper and mirroring (battery present)
-	.byte %00000000
-	.byte $00
+.segment "HEADER" ; NAMCO 163
+	.byte "NES", $1A
+	.byte $02           ; 2 * 16KB PRG ROM
+	.byte $01           ; 1 * 8KB CHR ROM
+	.byte %00110000     ; mapper and mirroring
+	.byte %00011000     ; NES 2.0
+	.byte %00110000     ; submapper 3
 	.byte $00
 	.byte $00 
 	.byte $00, $00, $00, $00, $00  ; filler bytes

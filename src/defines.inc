@@ -7,8 +7,6 @@ KEY_SEL       = 1 << 5
 KEY_B         = 1 << 6
 KEY_A         = 1 << 7
 
-SPRITEZERO    = 1 << 6
-
 PPUCTRL       = $2000
 PPUMASK       = $2001
 PPUSTATUS     = $2002
@@ -22,70 +20,82 @@ JOYPAD1       = $4016
 JOYPAD2       = $4017
 
 TIMER_FLAG      = 1 << 0
-IRQ_FLAG        = 1 << 1
-EDIT_FLAG       = 1 << 2
-LOOP_FLAG       = 1 << 3
-KEY_ON_OFF      = 1 << 4
 
+;------------;
+;    N163    :
+;------------;
+N163_RAM_PORT   =   $4800
+N163_IRQ_LOW    =   $5000
+N163_IRQ_HI     =   $5800
+    IRQ_EN      =   1 << 7
+    IRQ_DIS     =   0 << 7
+N163_CHR0       =   $8000
+N163_CHR1       =   $8800
+N163_CHR2       =   $9000
+N163_CHR3       =   $9800
+N163_CHR4       =   $A000
+N163_CHR5       =   $A800
+N163_CHR6       =   $B000
+N163_CHR7       =   $B800
+N163_NT0        =   $C000
+N163_NT1        =   $C800
+N163_NT2        =   $D000
+N163_NT3        =   $D800
+N163_PRGSEL0    =   $E000       ; 8K @ $8000-9FFF
+    AUDIO_YES   =   0 << 6      ; 0 = Enabled, 1 = Disabled   
+    AUDIO_NO    =   1 << 6 
+N163_PRGSEL1    =   $E800       ; 8K @ $A000-BFFF
+    CHRRAM_EN0  =   0 << 6      ; Disable CHR-RAM at $0000-$0FFF
+    CHRRAM_DIS0 =   1 << 6
+                                ; 0: Pages $E0-$FF use NT RAM as CHR-RAM
+                                ; 1: Pages $E0-$FF are the last $20 banks of CHR-ROM
+    CHRRAM_EN1  =   0 << 7      ; Disable CHR-RAM at $1000-$1FFF
+    CHRRAM_DIS1 =   1 << 7
+                                ; 0: Pages $E0-$FF use NT RAM as CHR-RAM
+                                ; 1: Pages $E0-$FF are the last $20 banks of CHR-ROM
+N163_PRGSEL2    =   $F000       ; 8K @ $C000-DFFF
+N163_RAM_EN     =   $F800
+    PRGRAM0_EN  =   0 << 0      ; $6000-$67FF (0 = write enable)
+    PRGRAM0_DIS =   1 << 0
+    PRGRAM1_EN  =   0 << 1      ; $6800-$6FFF
+    PRGRAM1_DIS =   1 << 0
+    PRGRAM2_EN  =   0 << 2      ; $7000-$77FF
+    PRGRAM2_DIS =   1 << 0
+    PRGRAM3_EN  =   0 << 3      ; $7800-$7FFF
+    PRGRAM3_DIS =   1 << 0
+    WRITE_EN    =   %0100 << 4
 
-DRAW_FLAG       = 1 << 0
-COLUMN_FLAG     = 1 << 1
-ROW_FLAG        = 1 << 2
-DRAW_ATTR_FLAG  = 1 << 3
-ATTR_COL_FLAG   = 1 << 4 
-ATTR_ROW_FLAG   = 1 << 5
+; AUDIO --------
 
-EPSM_ADDR0      = $C000
-EPSM_DATA0      = $E000
-EPSM_ADDR1      = $C002
-EPSM_DATA1      = $E002
+N163_ADDR       = $F800
+    AUTOINC_EN  = 1 << 7
+    AUTOINC_DIS = 1 << 0
+N163_DATA       = $4800
 
-NOTE_C1         = $00           ; index into tile and note table
-NOTE_D1         = $01
-NOTE_E1         = $02
-NOTE_F1         = $03
-NOTE_G1         = $04
-NOTE_A1         = $05
-NOTE_B1         = $06
+N163_CHANNEL0   = $40
+N163_CHANNEL1   = $48
+N163_CHANNEL2   = $50
+N163_CHANNEL3   = $58
+N163_CHANNEL4   = $60
+N163_CHANNEL5   = $68
+N163_CHANNEL6   = $70
+N163_CHANNEL7   = $78
 
-NOTE_C2         = $07
-NOTE_D2         = $08
-NOTE_E2         = $09
-NOTE_F2         = $0A
-NOTE_G2         = $0B
-NOTE_A2         = $0C
-NOTE_B2         = $0D
+N163_FREQ_LO    = 0
+N163_PHASE_LO   = 1
+N163_FREQ_MID   = 2
+N163_PHASE_MID  = 3
+N163_FREQ_HI    = 4
+N163_PHASE_HI   = 5
+N163_WAVE_ADDR  = 6
+N163_VOL        = 7
+    CH_0        = 0 << 4
+    CH_1        = 1 << 4
+    CH_2        = 2 << 4
+    CH_3        = 3 << 4
+    CH_4        = 4 << 4
+    CH_5        = 5 << 4
+    CH_6        = 6 << 4
+    CH_7        = 7 << 4
+;-----------------------------------
 
-NOTE_C3         = $0E
-NOTE_D3         = $0F
-NOTE_E3         = $10
-NOTE_F3         = $11
-NOTE_G3         = $12
-NOTE_A3         = $13
-NOTE_B3         = $14
-
-NOTE_C4         = $15
-NOTE_D4         = $16
-NOTE_E4         = $17
-NOTE_F4         = $18
-NOTE_G4         = $19
-NOTE_A4         = $1A
-NOTE_B4         = $1B
-
-NOTE_C5         = $1C
-NOTE_D5         = $1D
-NOTE_E5         = $1E
-NOTE_F5         = $1F
-NOTE_G5         = $20
-NOTE_A5         = $21
-NOTE_B5         = $22
-
-NOTE_C6         = $23
-NOTE_D6         = $24
-NOTE_E6         = $25
-NOTE_F6         = $27
-NOTE_G6         = $28
-NOTE_A6         = $29
-NOTE_B6         = $2A
-
-NOTE_C7         = $2B

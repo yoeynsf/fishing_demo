@@ -55,6 +55,32 @@ CLEARMEM:
 	
 	JSR load_palettes
 
+; N163 INIT -------- ;
+
+    LDA #0 | AUDIO_NO
+    STA N163_PRGSEL0
+    LDA #1 | CHRRAM_DIS0 | CHRRAM_DIS1     ; not using NT as chrram
+    STA N163_PRGSEL1
+    LDA #3
+    STA N163_PRGSEL2
+
+    LDA #0 
+    STA N163_CHR0
+    LDA #1 
+    STA N163_CHR1
+    LDA #2
+    STA N163_CHR2
+    LDA #3 
+    STA N163_CHR3
+    LDA #4 
+    STA N163_CHR4
+    LDA #5 
+    STA N163_CHR5
+    LDA #6 
+    STA N163_CHR6
+    LDA #7 
+    STA N163_CHR7    
+
 ;everything is loaded, now to enable drawing
 	
 	CLI						; enable interrupts
