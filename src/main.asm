@@ -1,8 +1,8 @@
-mainprep:
+mainprep:           ; any vars that need to be set up before can be done in here
 
 
-.proc main
-temp_x  = temp      ; defines for sprite loader
+.proc main          ; "proc" is just a fancy way of saying scope (everything defined inside is not global)
+temp_x  = temp      ; defines for sprite loader. not interpreted as code or nuthin
 temp_y  = temp + 1
 ;----------------------------------------------------------------------
 	LDA #$00
@@ -11,7 +11,7 @@ temp_y  = temp + 1
     JSR sprite_prep
 
     LDA joy_status
-    AND #KEY_A 
+    AND #KEY_A      ; isolate the bit and see if it's pressed
     BEQ :+
     LDX #4
     LDY #0
@@ -25,9 +25,10 @@ temp_y  = temp + 1
 :
 
     JSR clear_sprites
+
 	LDA framecounter
 wait_vblank:
-	CMP framecounter	
+	CMP framecounter	; NMI will modify this and the branch will happen
 	BEQ wait_vblank
 	JMP main
 .endproc

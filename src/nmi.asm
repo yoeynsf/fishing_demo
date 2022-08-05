@@ -1,5 +1,5 @@
 NMI:
-    PHA
+    PHA                 ; preserve regs
     TYA        
     PHA       
     TXA
@@ -10,11 +10,10 @@ NMI:
 	LDA #$02    		;copy sprite data from $0200 into PPU memory
     STA OAMDMA
 	
-	JSR load_palettes
+	JSR load_palettes   ; copy palette buffer into palette RAM
 
-	LDA s_PPUCTRL 		;Choose nametable 0 as the base nametable address
+	LDA s_PPUCTRL       ; copy buffers into regs 		
     STA PPUCTRL
-
     LDA s_PPUMASK
     STA PPUMASK
 
@@ -36,10 +35,10 @@ poll_joy:
     STA joy_held 
 
 
-    LDA PPUSTATUS  		;the next write to $2005 will be the X scroll
+    LDA PPUSTATUS  		; reset latch
 	LDA #$00
-    STA PPUSCROLL  		
-	STA PPUSCROLL
+    STA PPUSCROLL  		; X scroll
+	STA PPUSCROLL       ; Y scroll
 
     LDA flags			; decrement timer, *if* it is set
 	AND #TIMER_FLAG
@@ -47,11 +46,11 @@ poll_joy:
 	DEC timer
 	BNE :+
 	LDA flags			; if timer has run out, clear the flag
-	EOR #%00000001
+	EOR #TIMER_FLAG
 	STA flags
 :
 
-    LDA flags
+    LDA flags           ; check if we need to run fade engine
 	AND #PAL_FADEIN
 	BEQ :+
 	JSR fadein

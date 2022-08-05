@@ -1,4 +1,4 @@
-KEY_R         = 1 << 0
+KEY_R         = 1 << 0      ; aliases for doing anything with the joystatus var
 KEY_L         = 1 << 1 
 KEY_D         = 1 << 2
 KEY_U         = 1 << 3
@@ -7,7 +7,7 @@ KEY_SEL       = 1 << 5
 KEY_B         = 1 << 6
 KEY_A         = 1 << 7
 
-PPUCTRL       = $2000
+PPUCTRL       = $2000       ; defines for NES regs
 PPUMASK       = $2001
 PPUSTATUS     = $2002
 OAMADDR       = $2003
@@ -19,6 +19,7 @@ OAMDMA        = $4014
 JOYPAD1       = $4016
 JOYPAD2       = $4017
 
+; Programmer flags, for use with that "flags" variable in the zp
 TIMER_FLAG      = 1 << 0
 PAL_FADEIN      = 1 << 1    ; 0 = don't run fade engine, 1 = run fade engine
 PAL_FADEOUT     = 1 << 2    ; 0 = don't run fade engine, 1 = run fade engine

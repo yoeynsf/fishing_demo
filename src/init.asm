@@ -41,14 +41,14 @@ CLEARMEM:
 
 ; N163 INIT -------- ;
 
-    LDA #0 | AUDIO_NO
+    LDA #0 | AUDIO_NO                       ; $8000 = bank 0, disable audio 
     STA N163_PRGSEL0
-    LDA #1 | CHRRAM_DIS0 | CHRRAM_DIS1     ; not using NT as chrram
+    LDA #1 | CHRRAM_DIS0 | CHRRAM_DIS1      ; $A000 = bank 1, not using NT as chrram
     STA N163_PRGSEL1
-    LDA #3
+    LDA #2                                  ; $C000 = bank 2
     STA N163_PRGSEL2
 
-    LDA #0 
+    LDA #0                                  ; chr init
     STA N163_CHR0
     LDA #1 
     STA N163_CHR1
@@ -65,7 +65,7 @@ CLEARMEM:
     LDA #7 
     STA N163_CHR7    
 
-    LDA PPUSTATUS
+    LDA PPUSTATUS                           ; load nametables
     LDA #$20
     STA PPUADDR
     LDA #$00
