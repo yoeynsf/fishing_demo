@@ -7,7 +7,7 @@
 	.byte %00110001     ; mapper and mirroring (vertical)
 	.byte %00011000     ; NES 2.0
 	.byte %00110000     ; submapper 3
-	.byte $00
+	.byte $00		; this mapper sucks
 	.byte $00 
 	.byte $00, $00, $00, $00, $00  ; filler bytes
 
