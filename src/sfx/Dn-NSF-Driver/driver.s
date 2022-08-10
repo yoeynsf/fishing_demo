@@ -24,7 +24,7 @@ ENABLE_ROW_SKIP = 1		; Enable this to add code for seeking to a row > 0 when usi
 ;USE_VRC7 = 1			; Enable this to include VRC7 code
 ;USE_FDS  = 1			; Enable this to include FDS code
 ;USE_MMC5 = 1			; Enable this to include MMC5 code
-;USE_N163 = 1			; Enable this to include N163 code
+USE_N163 = 1			; Enable this to include N163 code
 ;USE_S5B  = 1			; Enable this to include 5B code
 ;USE_ALL  = 1			;;; ;; ; All expansion chips, always assumes 8 N163 channels
 
@@ -248,7 +248,7 @@ var_ch_Harmonic:		.res EFF_CHANS				;; ;; !! Frequency multiplier
 last_zp_var:			.res 1						; Not used
 
 
-.segment "BSS"
+.segment "DNFTRAM"
 
 ;
 ; Driver variables
@@ -399,8 +399,7 @@ var_ch_EchoBuffer:		.res (ECHO_BUFFER_LENGTH + 1) * CHANNELS
 last_bss_var:			.res 1						; Not used
 
 
-.segment "CODE"
-.include "longbranch.mac"		;;; ;; ;
+.segment "BANK0"
 
 ; $9000 - $9003
 ; $9010
@@ -639,10 +638,10 @@ ft_music_addr:
 	.include "music.asm"
 .else
 	; Binary chunk music
-	.incbin "music.bin"			; Music data
+	.incbin "../music.bin"			; Music data
 .if .defined(USE_DPCM)
 	.segment "DPCM"				; DPCM samples goes here
-	.incbin "samples.bin"
+	.incbin "../samples.bin"
 .endif
 .endif
 .endif

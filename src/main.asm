@@ -1,5 +1,7 @@
 mainprep:           ; any vars that need to be set up before can be done in here
 
+    LDA #1
+    JSR ft_music_init
 
 .proc main          ; "proc" is just a fancy way of saying scope (everything defined inside is not global)
 temp_x  = temp      ; defines for sprite loader. not interpreted as code or nuthin

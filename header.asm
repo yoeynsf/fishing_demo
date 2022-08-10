@@ -1,4 +1,5 @@
 .include "src/defines.inc"      ; a bunch of defines to make it easier
+.include "longbranch.mac"
 
 .segment "HEADER" ; NAMCO 163, NES 2.0 header
 	.byte "NES", $1A
@@ -34,6 +35,9 @@ palette_temp2:                  .res 1  ; palette fade in scratch space
 .segment "INTERNALRAM"      ; actual free space is $0300-07FF (see config)
 bgpalettes:						.res 16 ; palette buffer (loaded every frame)
 sprpalettes:					.res 16
+
+.segment "BANK0"
+    .include "src/sfx/Dn-NSF-Driver/driver.s"
 
 .segment "FIXEDBANK"        ; CA65 is a single-pass assembler, so everything is assembled in the order it is included
 	.include "src/init.asm"             ; boilerplate initialization code, mapper init too
