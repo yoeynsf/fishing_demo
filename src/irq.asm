@@ -5,9 +5,6 @@ IRQ:
     TXA
     PHA
 
-    ; nothing yet
-
-
 	PLA
     TAX
     PLA       

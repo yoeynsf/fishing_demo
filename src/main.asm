@@ -5,7 +5,7 @@ mainprep:           ; any vars that need to be set up before can be done in here
     LDA #>song_bank0
     STA song_pointer + 1
 
-    LDA #0			; song 1
+    LDA #1			; song 1
     LDX #0			; NTSC
     JSR ft_music_init
 

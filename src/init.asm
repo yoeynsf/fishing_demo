@@ -40,6 +40,8 @@ CLEARMEM:
     JSR load_palettes
 
 ; N163 INIT -------- ;
+    LDA #IRQ_DIS
+    STA N163_IRQ_HI
 
     LDA #0 | AUDIO_NO                       ; $8000 = bank 0, disable audio 
     STA N163_PRGSEL0
