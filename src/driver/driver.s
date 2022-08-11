@@ -1,6 +1,6 @@
 ;;; ;; ;
-;;; ;; ; Dn-FamiTracker NSF Driver
-;;; ;; ; By jsr, HertzDevil, D.P.C.M., etc.
+;;; ;; ; 0CC-FamiTracker NSF Driver
+;;; ;; ; By HertzDevil
 ;;; ;; ;
 
 ;
@@ -8,7 +8,7 @@
 ;
 
 USE_BANKSWITCH = 1		; Enable bankswitching code
-;USE_OLDVIBRATO = 1		;;; ;; ; Enable old vibrato code
+USE_OLDVIBRATO = 1		;;; ;; ; Enable old vibrato code
 USE_LINEARPITCH = 1		;;; ;; ; Enable linear pitch code
 
 USE_DPCM = 1			; Enable DPCM channel (currently broken, leave enabled to avoid trouble).
@@ -128,7 +128,6 @@ CHANNELS	= DPCM_OFFSET + .defined(USE_DPCM)
 	EFF_SLIDE_UP
 	EFF_SLIDE_DOWN_LOAD
 	EFF_SLIDE_DOWN
-	EFF_PHASE_RESET
 .endenum
 
 .enum
@@ -215,8 +214,6 @@ var_ch_ModInstRate:		.res 2		;;; ;; ;
 var_ch_ModEffWritten:	.res 1
 var_ch_FDSVolume:		.res 1		;;; ;; ;
 var_ch_ModBias:			.res 1		;;; ;; ;
-var_ch_FDSCarrier:		.res 2		;; ;; !! for auto-FM in conjunction with frequency multiplier
-var_ch_ModTable:		.res 16
 .endif
 
 .if .defined(USE_N163)
@@ -241,9 +238,6 @@ var_EnvelopeType:		.res 1						; $0D
 var_AutoEnv_Channel:	.res 1						;;; ;; ; 050B
 var_EnvelopeTrigger:	.res 1						; Hxy issued
 .endif												; ;; ;;;
-
-; hack effect variable to zeropage due to low space remaining in BSS when all expansions are enabled
-var_ch_Harmonic:		.res EFF_CHANS				;; ;; !! Frequency multiplier
 
 last_zp_var:			.res 1						; Not used
 
@@ -474,8 +468,7 @@ last_bss_var:			.res 1						; Not used
 ; NSF entry addresses
 
 .if .defined(PACKAGE)
-	; version 2.13
-	.byte "DN-FT ", $02, $0D
+	.byte "DN-FT ", $02, $0C		 ;; ;; !!
 .endif
 
 LOAD:
@@ -627,7 +620,7 @@ bit_mask:		;;; ;; ; general-purpose bit mask
 ;  A simple way to handle multiple songs is to move this
 ;  to RAM and setup a table of pointers to music data
 ft_music_addr:
-	.word song_bank0 	    ; This is the point where music data is stored
+	.word song_bank0					; This is the point where music data is stored
 
 
 .if .defined(INC_MUSIC)
@@ -638,10 +631,10 @@ ft_music_addr:
 	.include "music.asm"
 .else
 	; Binary chunk music
-	.incbin "../music.bin"			; Music data
+	.incbin "music.bin"			; Music data
 .if .defined(USE_DPCM)
 	.segment "DPCM"				; DPCM samples goes here
-	.incbin "../samples.bin"
+	.incbin "samples.bin"
 .endif
 .endif
 .endif
