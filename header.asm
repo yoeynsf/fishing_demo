@@ -14,6 +14,7 @@
 
 .segment "ZEROPAGE"
 pointer:						.res 2  ; general purpose pointer for indirect indexed
+song_pointer:                   .res 2
 joy_held:					    .res 1  ; buttons held for 1> frame
 joy_status:						.res 1  ; results of controller poll (in NMI)
 framecounter:					.res 1  ; NMI will modify this and signal to the main thread that VBlank has occured
@@ -36,8 +37,16 @@ palette_temp2:                  .res 1  ; palette fade in scratch space
 bgpalettes:						.res 16 ; palette buffer (loaded every frame)
 sprpalettes:					.res 16
 
-.segment "BANK0"
-    .include "src/sfx/Dn-NSF-Driver/driver.s"
+.segment "AUDIODRIVER"
+    .include "src/driver/driver.s"
+
+.segment "AUDIODATA0"
+song_bank0:
+    .incbin "src/music/music.bin"
+
+.segment "DPCM"
+dpcm0:
+    .incbin "src/music/samples.bin"
 
 .segment "FIXEDBANK"        ; CA65 is a single-pass assembler, so everything is assembled in the order it is included
 	.include "src/init.asm"             ; boilerplate initialization code, mapper init too

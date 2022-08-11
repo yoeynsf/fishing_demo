@@ -399,7 +399,7 @@ var_ch_EchoBuffer:		.res (ECHO_BUFFER_LENGTH + 1) * CHANNELS
 last_bss_var:			.res 1						; Not used
 
 
-.segment "BANK0"
+.segment "AUDIODRIVER"
 
 ; $9000 - $9003
 ; $9010
@@ -627,7 +627,7 @@ bit_mask:		;;; ;; ; general-purpose bit mask
 ;  A simple way to handle multiple songs is to move this
 ;  to RAM and setup a table of pointers to music data
 ft_music_addr:
-	.word * + 2					; This is the point where music data is stored
+	.word song_pointer + 2	    ; This is the point where music data is stored
 
 
 .if .defined(INC_MUSIC)
