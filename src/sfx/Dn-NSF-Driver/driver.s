@@ -8,7 +8,7 @@
 ;
 
 USE_BANKSWITCH = 1		; Enable bankswitching code
-USE_OLDVIBRATO = 1		;;; ;; ; Enable old vibrato code
+;USE_OLDVIBRATO = 1		;;; ;; ; Enable old vibrato code
 USE_LINEARPITCH = 1		;;; ;; ; Enable linear pitch code
 
 USE_DPCM = 1			; Enable DPCM channel (currently broken, leave enabled to avoid trouble).
@@ -60,7 +60,7 @@ NTSC_PERIOD_TABLE = 1
 ;;; ;; ; many of these have been renamed for consistency
 ;;; ;; ; some are moved from the respective chips' asm files
 
-NAMCO_CHANNELS = 8
+NAMCO_CHANNELS = 4
 
 CH_COUNT_2A03 = 4
 CH_COUNT_MMC5 = 2 * .defined(USE_MMC5)
