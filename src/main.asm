@@ -1,6 +1,7 @@
 mainprep:           ; any vars that need to be set up before can be done in here
 
-    LDA #1
+    LDA #0			; song 1
+    LDX #0			; NTSC
     JSR ft_music_init
 
 .proc main          ; "proc" is just a fancy way of saying scope (everything defined inside is not global)
