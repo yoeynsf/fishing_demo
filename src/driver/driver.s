@@ -627,7 +627,7 @@ bit_mask:		;;; ;; ; general-purpose bit mask
 ;  A simple way to handle multiple songs is to move this
 ;  to RAM and setup a table of pointers to music data
 ft_music_addr:
-	.word song_pointer + 2	    ; This is the point where music data is stored
+	.word song_bank0 	    ; This is the point where music data is stored
 
 
 .if .defined(INC_MUSIC)
