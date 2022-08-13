@@ -56,6 +56,7 @@ dpcm0:
     .include "src/palette_fade.asm"     ; <- all of the palette related stuff is in here
 	.include "src/subroutines.asm"      ; random subroutines
     .include "src/rodata.asm"           ; any data (palettes, nametables (will seperate into banks later))
+    .include "src/entity_handler.asm"   ; self explanatory
 
 .segment "CHR"              ; 4K tables
 	.incbin "src/gfx/0.chr"     ; sprite   
