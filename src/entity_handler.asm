@@ -1,4 +1,4 @@
-MAX_ENTITIES    =   16
+MAX_ENTITIES    =   32
 
 ;----------------;
 ;   Entity IDs   ;

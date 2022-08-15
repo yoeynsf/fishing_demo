@@ -62,6 +62,8 @@ poll_joy:
 :	
     JSR ft_music_play
 
+    LDA #0
+    STA sprites_rendered
 	INC framecounter
 	
 	PLA

@@ -37,6 +37,7 @@ temp_y  = temp + 1
     STA $0200, X
     INY
     INX
+    INC sprites_rendered
     JMP :-
     donesprite:
     STX currentOAMpos
@@ -44,6 +45,9 @@ temp_y  = temp + 1
 .endproc 
  
 .proc clear_sprites
+    LDA sprites_rendered
+    CMP #64
+    BEQ done
     LDX currentOAMpos
     LDA #$FF
     Clear:
@@ -54,6 +58,7 @@ temp_y  = temp + 1
     INX
     CPX OAMposAtFrame
     BNE Clear
+done:
     RTS
 .endproc 
 
