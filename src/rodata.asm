@@ -25,6 +25,11 @@ palette_data1:
     .byte $0F, $19, $29, $39
     .byte $0F, $11, $21, $31
 
+spr_fish:
+    .byte $01, $00, $00, $00
+    .byte $01, $01, $00, $08
+    .byte $80
+
 blank_nam:
     .incbin "src/gfx/blank.nam"
 fish_nam:

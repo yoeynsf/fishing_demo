@@ -13,9 +13,6 @@ mainprep:           ; any vars that need to be set up before can be done in here
     LDY #1
     JSR fadein_palette
 
-    LDX #ID_fish
-    JSR spawn_entity
-
 .proc main          ; "proc" is just a fancy way of saying scope (everything defined inside is not global)
 temp_x  = temp      ; defines for sprite loader. not interpreted as code or nuthin
 temp_y  = temp + 1
@@ -24,6 +21,28 @@ temp_y  = temp + 1
 	TAX
 	TAY
     JSR sprite_prep
+
+    LDA joy_held
+    AND #KEY_A
+    BNE :+
+    LDA joy_status
+    AND #KEY_A  
+    BEQ :+
+    LDX #ID_fish
+    JSR spawn_entity
+:
+
+    LDA joy_held
+    AND #KEY_B
+    BNE :+
+    LDA joy_status
+    AND #KEY_B  
+    BEQ :+
+    LDX #ID_fish
+    JSR despawn_entity
+:
+    JSR update_entity
+    JSR load_entity_sprites
 
     JSR clear_sprites
 

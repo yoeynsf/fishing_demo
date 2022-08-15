@@ -1,4 +1,4 @@
-MAX_ENTITIES    =   4
+MAX_ENTITIES    =   16
 
 ;----------------;
 ;   Entity IDs   ;
@@ -21,7 +21,8 @@ entity_cel_pointer:             .res MAX_ENTITIES * 2
 entity_ID:                      .res MAX_ENTITIES
 entity_state:                   .res MAX_ENTITIES
 entity_direction:               .res MAX_ENTITIES
-entity_velocity:                .res MAX_ENTITIES
+entity_velocity_X:              .res MAX_ENTITIES
+entity_velocity_Y:              .res MAX_ENTITIES
 entity_cam_X:                   .res MAX_ENTITIES
 entity_cam_Y:                   .res MAX_ENTITIES
 entity_world_X:                 .res MAX_ENTITIES
@@ -46,7 +47,139 @@ done:
     RTS 
 .endproc 
 
+.proc despawn_entity
+    STX temp 
+
+    LDX #MAX_ENTITIES
+:
+    DEX 
+    BMI done
+    LDA entity_ID, X
+    BEQ :-
+    CMP temp
+    BNE :-
+    LDA #ID_null
+    STA entity_ID, X
+    STA entity_cam_X, X
+    STA entity_state, X
+    STA entity_velocity_X, X
+    STA entity_velocity_Y, X
+    STA entity_cam_X, X
+    STA entity_cam_Y, X              
+    STA entity_world_X, X         
+    STA entity_world_Y, X
+    STA entity_anim_timer, X
+    TXA 
+    ASL 
+    TAX 
+    LDA #ID_null
+    STA entity_cel_pointer, X
+    STA entity_cel_pointer + 1, X 
+done:
+    RTS 
+.endproc
+
+entity_update_table:
+    .word $0000, fish_handler
+
 .proc update_entity
+
+    LDX #0
+    STX temp
+check_entity:
+    LDA entity_ID, X                ; grab ID, and if not zero, index into jump table and go 
+    BEQ next
+    ASL 
+    TAX
+    LDA entity_update_table, X
+    STA pointer 
+    LDA entity_update_table + 1, X
+    STA pointer + 1
+    JMP (pointer)
+next:
+    INC temp
+    INX 
+    CPX #MAX_ENTITIES
+    BNE check_entity
 
     RTS 
 .endproc 
+
+
+.proc fish_handler
+slot_number     = temp
+ID_buf          = temp + 1
+
+    TXA                         ; restore X to original index
+    LSR   
+    TAX
+    STX ID_buf
+
+    LDX slot_number
+
+    LDA entity_velocity_X, X
+    CLC 
+    ADC #$60
+    STA entity_velocity_X, X
+
+    LDA entity_cam_X, X
+    ADC #0
+    STA entity_cam_X, X 
+
+    LDA entity_velocity_Y, X
+    CLC 
+    ADC #$44
+    STA entity_velocity_Y, X
+
+    LDA entity_cam_Y, X
+    ADC #0
+    STA entity_cam_Y, X 
+
+    TXA 
+    ASL 
+    TAX 
+    LDA #<spr_fish
+    STA entity_cel_pointer, X
+    LDA #>spr_fish
+    STA entity_cel_pointer + 1, X
+
+    LDX slot_number
+    JMP update_entity::next
+.endproc 
+
+.proc load_entity_sprites
+temp_x      =   temp
+temp_y      =   temp + 1
+interval    =   temp + 2
+
+    LDX #0
+    STX interval
+check_slot:
+    LDA entity_ID, X 
+    BEQ next
+    JMP load_sprite
+next: 
+    INC interval
+    INX
+    LDA interval
+    CMP #MAX_ENTITIES
+    BEQ done
+    JMP check_slot
+load_sprite:
+    LDA entity_cam_X, X
+    STA temp_x
+    LDA entity_cam_Y, X
+    STA temp_y
+    TXA 
+    ASL
+    TAX 
+    LDA entity_cel_pointer, X 
+    STA pointer 
+    LDA entity_cel_pointer + 1, X
+    STA pointer + 1
+    JSR load_sprites 
+    LDX interval
+    JMP next
+done:
+    RTS
+.endproc
