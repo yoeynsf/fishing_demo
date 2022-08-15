@@ -1,4 +1,4 @@
-MAX_ENTITIES    =   32
+MAX_ENTITIES    =   64
 
 ;----------------;
 ;   Entity IDs   ;
@@ -19,14 +19,14 @@ entity_cel_pointer:             .res MAX_ENTITIES * 2
 
 .segment "INTERNALRAM"
 entity_ID:                      .res MAX_ENTITIES
-entity_state:                   .res MAX_ENTITIES
-entity_direction:               .res MAX_ENTITIES
+;entity_state:                   .res MAX_ENTITIES
+;entity_direction:               .res MAX_ENTITIES
 entity_velocity_X:              .res MAX_ENTITIES
 entity_velocity_Y:              .res MAX_ENTITIES
 entity_cam_X:                   .res MAX_ENTITIES
 entity_cam_Y:                   .res MAX_ENTITIES
-entity_world_X:                 .res MAX_ENTITIES
-entity_world_Y:                 .res MAX_ENTITIES
+;entity_world_X:                 .res MAX_ENTITIES
+;entity_world_Y:                 .res MAX_ENTITIES
 entity_anim_timer:              .res MAX_ENTITIES
 
 .segment "FIXEDBANK"
@@ -61,13 +61,14 @@ done:
     LDA #ID_null
     STA entity_ID, X
     STA entity_cam_X, X
-    STA entity_state, X
+;    STA entity_state, X
+;    STA entity_direction, X
     STA entity_velocity_X, X
     STA entity_velocity_Y, X
     STA entity_cam_X, X
     STA entity_cam_Y, X              
-    STA entity_world_X, X         
-    STA entity_world_Y, X
+;    STA entity_world_X, X         
+;    STA entity_world_Y, X
     STA entity_anim_timer, X
     TXA 
     ASL 
@@ -107,44 +108,7 @@ next:
 
 
 .proc fish_handler
-slot_number     = temp
-ID_buf          = temp + 1
-
-    TXA                         ; restore X to original index
-    LSR   
-    TAX
-    STX ID_buf
-
-    LDX slot_number
-
-    LDA entity_velocity_X, X
-    CLC 
-    ADC #$60
-    STA entity_velocity_X, X
-
-    LDA entity_cam_X, X
-    ADC #0
-    STA entity_cam_X, X 
-
-    LDA entity_velocity_Y, X
-    CLC 
-    ADC #$44
-    STA entity_velocity_Y, X
-
-    LDA entity_cam_Y, X
-    ADC #0
-    STA entity_cam_Y, X 
-
-    TXA 
-    ASL 
-    TAX 
-    LDA #<spr_fish
-    STA entity_cel_pointer, X
-    LDA #>spr_fish
-    STA entity_cel_pointer + 1, X
-
-    LDX slot_number
-    JMP update_entity::next
+    .include "fish_AI.asm"
 .endproc 
 
 .proc load_entity_sprites

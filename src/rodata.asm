@@ -30,6 +30,10 @@ spr_fish:
     .byte $01, $01, $00, $08
     .byte $80
 
+spr_smallfish:
+    .byte $01, $02, $00, $00
+    .byte $80
+
 blank_nam:
     .incbin "src/gfx/blank.nam"
 fish_nam:

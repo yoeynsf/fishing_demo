@@ -60,7 +60,7 @@ poll_joy:
 	BEQ :+
 	JSR fadeout
 :	
-    JSR ft_music_play
+;    JSR ft_music_play
 
     LDA #0
     STA sprites_rendered
