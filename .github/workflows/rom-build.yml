@@ -9,9 +9,11 @@ jobs:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/cache_cc65
       - name: Run build script
-        run: |
-          export PATH="${{ cc65Path }}/bin:$PATH"
-          bash make.bat
+        with:
+          cc65Path: ${{ github.workspace }}/opt/cc65
+            run: |
+              export PATH="${{ cc65Path }}/bin:$PATH"
+              bash make.bat
 
       - name: Upload ROM binary
         uses: actions/upload-artifact@v1
