@@ -11,9 +11,9 @@ jobs:
       - name: Run build script
         with:
           cc65Path: ${{ github.workspace }}/opt/cc65
-            run: |
-              export PATH="${{ cc65Path }}/bin:$PATH"
-              bash make.bat
+          run: |
+            export PATH="${{ cc65Path }}/bin:$PATH"
+            bash make.bat
 
       - name: Upload ROM binary
         uses: actions/upload-artifact@v1
