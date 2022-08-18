@@ -65,7 +65,7 @@ poll_joy:
     STA sprites_rendered
 	INC framecounter
 
-    JSR ft_music_play
+;    JSR ft_music_play
 	
 	PLA
     TAX
