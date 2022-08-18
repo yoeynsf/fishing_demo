@@ -31,5 +31,5 @@ runs:
           cd cc65
           PREFIX=${{ inputs.cc65Path }} make
           PREFIX=${{ inputs.cc65Path }} make install
-          export PATH="${{ inputs.cc65Path }}:$PATH"
+          export PATH=${{ inputs.cc65Path }}/bin:$PATH
         shell: bash
