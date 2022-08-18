@@ -60,11 +60,12 @@ poll_joy:
 	BEQ :+
 	JSR fadeout
 :	
-;    JSR ft_music_play
 
     LDA #0
     STA sprites_rendered
 	INC framecounter
+
+    JSR ft_music_play
 	
 	PLA
     TAX
