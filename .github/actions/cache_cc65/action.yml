@@ -30,4 +30,5 @@ runs:
         run: |
           cd cc65
           PREFIX=${{ inputs.cc65Path }} make bin
+          echo "${{ inputs.cc65Path }}/bin" >> $GITHUB_PATH
         shell: bash
