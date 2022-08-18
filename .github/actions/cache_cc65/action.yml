@@ -33,4 +33,4 @@ runs:
           PREFIX=${{ inputs.cc65Path }} make install
         shell: bash
       # Add CC65 binaries to path
-        run: echo "${{ inputs.cc65Path }}/bin" >> $GITHUB_PATH
+      - run: echo "${{ inputs.cc65Path }}/bin" >> $GITHUB_PATH
