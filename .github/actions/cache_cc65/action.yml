@@ -29,6 +29,6 @@ runs:
       - if: steps.cache_cc65.outputs.cache-hit != 'true'
         run: |
           cd cc65
-          PREFIX=${{ inputs.cc65Path }} make bin
+          PREFIX=${{ inputs.cc65Path }} make
           PREFIX=${{ inputs.cc65Path }} make install
         shell: bash
