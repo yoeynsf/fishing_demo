@@ -2,9 +2,6 @@ name: rom-build
 
 on: push
 
-env:
-  CC65_PATH: ${{ github.workspace }}/opt/cc65
-
 jobs:
   rom-build:
     runs-on: ubuntu-latest
