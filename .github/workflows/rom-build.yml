@@ -10,7 +10,7 @@ jobs:
       - uses: ./.github/actions/cache_cc65
       - name: Run build script
         run: |
-          export PATH="${{ inputs.cc65Path }}/bin:$PATH"
+          export PATH="${{ cc65Path }}/bin:$PATH"
           bash make.bat
 
       - name: Upload ROM binary
