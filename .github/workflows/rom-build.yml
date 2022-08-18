@@ -10,7 +10,7 @@ jobs:
       - uses: ./.github/actions/cache_cc65
       - name: Run build script
         run: |
-          echo "${{ github.workspace }}/opt/cc65" >> $GITHUB_PATH
+          echo "${{ github.workspace }}/opt/cc65/bin" >> $GITHUB_PATH
           bash make.bat
 
       - name: Upload ROM binary
