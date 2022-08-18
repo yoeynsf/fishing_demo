@@ -6,8 +6,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Run build script
       - uses: ./.github/actions/cache_cc65
+      - name: Run build script
         run: bash make.bat
 
       - name: Upload ROM binary
