@@ -34,3 +34,4 @@ runs:
         shell: bash
       # Add CC65 binaries to path
       - run: echo "${{ inputs.cc65Path }}/bin" >> $GITHUB_PATH
+        shell: bash
