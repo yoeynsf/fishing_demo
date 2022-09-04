@@ -1,4 +1,6 @@
 .proc sprite_prep
+    LDA #0
+    STA sprites_rendered
     LDA OAMposAtFrame
     CLC
     ADC #32

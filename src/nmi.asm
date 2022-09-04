@@ -101,9 +101,6 @@ SkipRendering:
     AND #%11111110    ; turn off render flag
     STA flags
 
-    LDA #0
-    STA sprites_rendered
-
     PLA
     TAX
     PLA
