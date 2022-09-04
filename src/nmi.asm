@@ -5,12 +5,14 @@ NMI:
     TXA
     PHA
 
+.if .defined(DEBUGGING)
     ; debug: NMI length measurement
-    ; LDA s_PPUMASK
-    ; AND #%00011111    ; remove emphasis
-    ; ORA #%10000001    ; blue emphasis, grayscale
-    ; STA s_PPUMASK
-    ; STA PPUMASK
+    LDA s_PPUMASK
+    AND #%00011111    ; remove emphasis
+    ORA #%10000001    ; blue emphasis, grayscale
+    STA s_PPUMASK
+    STA PPUMASK
+.endif
 
     LDA flags
     AND #RENDER_FLAG
@@ -41,9 +43,9 @@ poll_joy:
     ROL joy_status
     DEX                 ; repeated 8 times, A, B, SEL, STA, U, D, L, R
     BNE :-
-    TYA 
-    AND joy_status       
-    STA joy_held 
+    TYA
+    AND joy_status
+    STA joy_held
 
 
     LDA PPUSTATUS       ; reset latch
@@ -76,27 +78,35 @@ poll_joy:
 
     INC framecounter
 
+.if .defined(DEBUGGING)
     ; debug: ft_music_play length measurement
-    ; LDA s_PPUMASK
-    ; AND #%00011111    ; remove emphasis
-    ; ORA #%01100001    ; red emphasis, grayscale
-    ; STA s_PPUMASK
-    ; STA PPUMASK
+    LDA s_PPUMASK
+    AND #%00011111    ; remove emphasis
+    ORA #%01100001    ; red emphasis, grayscale
+    STA s_PPUMASK
+    STA PPUMASK
+.endif
 
     JSR ft_music_play
 
+.if .defined(DEBUGGING)
     ; debug: finish routine length measurement
-    ; LDA s_PPUMASK
-    ; AND #%00011110    ; remove emphasis and grayscale
-    ; STA s_PPUMASK
-    ; STA PPUMASK
+    LDA s_PPUMASK
+    AND #%00011110    ; remove emphasis and grayscale
+    STA s_PPUMASK
+    STA PPUMASK
+.endif
 
+    LDA flags
+    AND #%11111110    ; turn off render flag
     STA flags
 
+    LDA #0
     STA sprites_rendered
+
     PLA
     TAX
-    PLA       
+    PLA
     TAY
-    PLA        
+    PLA
     RTI

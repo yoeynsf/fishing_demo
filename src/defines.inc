@@ -25,6 +25,8 @@ TIMER_FLAG      = 1 << 1
 PAL_FADEIN      = 1 << 2    ; 0 = don't run fade engine, 1 = run fade engine
 PAL_FADEOUT     = 1 << 3    ; 0 = don't run fade engine, 1 = run fade engine
 
+;DEBUGGING = 1              ; highlight routine times with PPU emphasis and grayscale
+
 ;------------;
 ;    N163    :
 ;------------;

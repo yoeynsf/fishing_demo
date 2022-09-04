@@ -17,12 +17,14 @@ mainprep:           ; any vars that need to be set up before can be done in here
 temp_x  = temp      ; defines for sprite loader. not interpreted as code or nuthin
 temp_y  = temp + 1
 ;----------------------------------------------------------------------
+.if .defined(DEBUGGING)
     ; debug: main length measurement
-    ; LDA s_PPUMASK
-    ; AND #%00011111    ; remove emphasis
-    ; ORA #%11100001    ; black emphasis, grayscale
-    ; STA s_PPUMASK
-    ; STA PPUMASK
+    LDA s_PPUMASK
+    AND #%00011111    ; remove emphasis
+    ORA #%11100001    ; black emphasis, grayscale
+    STA s_PPUMASK
+    STA PPUMASK
+.endif
 
     LDA #$00
     TAX
@@ -50,29 +52,35 @@ temp_y  = temp + 1
 :
     JSR update_entity
 
+.if .defined(DEBUGGING)
     ; debug: load_entity_sprites length measurement
-    ; LDA s_PPUMASK
-    ; AND #%00011111    ; remove emphasis
-    ; ORA #%00100001    ; red emphasis, grayscale
-    ; STA s_PPUMASK
-    ; STA PPUMASK
+    LDA s_PPUMASK
+    AND #%00011111    ; remove emphasis
+    ORA #%00100001    ; red emphasis, grayscale
+    STA s_PPUMASK
+    STA PPUMASK
+.endif
 
     JSR load_entity_sprites
 
+.if .defined(DEBUGGING)
     ; debug: clear_sprites length measurement
-    ; LDA s_PPUMASK
-    ; AND #%00011111    ; remove emphasis
-    ; ORA #%01000001    ; green emphasis, grayscale
-    ; STA s_PPUMASK
-    ; STA PPUMASK
+    LDA s_PPUMASK
+    AND #%00011111    ; remove emphasis
+    ORA #%01000001    ; green emphasis, grayscale
+    STA s_PPUMASK
+    STA PPUMASK
+.endif
 
     JSR clear_sprites
 
+.if .defined(DEBUGGING)
     ; debug: finish routine length measurement
-    ; LDA s_PPUMASK
-    ; AND #%00011110    ; remove emphasis and grayscale
-    ; STA s_PPUMASK
-    ; STA PPUMASK
+    LDA s_PPUMASK
+    AND #%00011110    ; remove emphasis and grayscale
+    STA s_PPUMASK
+    STA PPUMASK
+.endif
 
     ; this frame is now ready for rendering
     LDA flags
