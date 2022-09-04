@@ -81,10 +81,9 @@ poll_joy:
 
     JSR ft_music_play
 
-    ; debug: NMI length measurement
+    ; debug: finish routine length measurement
     ; LDA s_PPUMASK
-    ; AND #%00011111    ; remove emphasis
-    ; ORA #%10000001    ; blue emphasis, grayscale
+    ; AND #%00011110    ; remove emphasis and grayscale
     ; STA s_PPUMASK
     ; STA PPUMASK
     
