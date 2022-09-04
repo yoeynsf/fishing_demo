@@ -1,4 +1,5 @@
 name: rom-build
+
 on: push
 
 jobs:
@@ -6,10 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Setup dependencies
-        shell: bash
-        run: sudo apt-get install cc65
-
+      - uses: ./.github/actions/cache_cc65
       - name: Run build script
         run: bash make.bat
 

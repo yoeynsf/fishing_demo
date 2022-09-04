@@ -65,11 +65,7 @@ NAMCO_CHANNELS = 4
 CH_COUNT_2A03 = 4
 CH_COUNT_MMC5 = 2 * .defined(USE_MMC5)
 CH_COUNT_VRC6 = 3 * .defined(USE_VRC6)
-.if EXPANSION_FLAG - .defined(USE_N163) << 4
-CH_COUNT_N163 = 8 * .defined(USE_N163) ; allow this to change once cc65 is embedded into 0CC-FT
-.else
 CH_COUNT_N163 = NAMCO_CHANNELS * .defined(USE_N163)
-.endif
 CH_COUNT_FDS  = 1 * .defined(USE_FDS)
 CH_COUNT_S5B  = 3 * .defined(USE_S5B)
 CH_COUNT_VRC7 = 6 * .defined(USE_VRC7)
