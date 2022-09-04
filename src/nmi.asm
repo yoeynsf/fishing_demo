@@ -74,6 +74,10 @@ poll_joy:
     JSR fadeout
 :
 
+    LDA flags
+    AND #%11111110    ; turn off render flag
+    STA flags
+
 SkipRendering:
 
     INC framecounter
@@ -96,10 +100,6 @@ SkipRendering:
     STA s_PPUMASK
     STA PPUMASK
 .endif
-
-    LDA flags
-    AND #%11111110    ; turn off render flag
-    STA flags
 
     PLA
     TAX
