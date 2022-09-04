@@ -5,6 +5,15 @@ ID_buf          = temp + 1
     LSR
     STA ID_buf
 
+    LDA slot_number
+    ASL
+    TAX
+
+    LDA #<spr_smallfish
+    STA entity_cel_pointer, X
+    LDA #>spr_smallfish
+    STA entity_cel_pointer + 1, X
+
     LDX slot_number
 
     LDA entity_velocity_X, X
@@ -25,13 +34,4 @@ ID_buf          = temp + 1
     BCC :+
     INC entity_cam_Y, X
 :
-    TXA
-    ASL
-    TAX
-    LDA #<spr_smallfish
-    STA entity_cel_pointer, X
-    LDA #>spr_smallfish
-    STA entity_cel_pointer + 1, X
-
-    LDX slot_number
     JMP update_entity::next
