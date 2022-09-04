@@ -47,7 +47,7 @@ temp_y  = temp + 1
 .proc clear_sprites
     LDA sprites_rendered
     CMP #64
-    BEQ done
+    BCS done
     LDX currentOAMpos
     LDA #$FF
     Clear:
