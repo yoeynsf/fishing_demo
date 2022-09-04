@@ -1,5 +1,5 @@
 KEY_R         = 1 << 0      ; aliases for doing anything with the joystatus var
-KEY_L         = 1 << 1 
+KEY_L         = 1 << 1
 KEY_D         = 1 << 2
 KEY_U         = 1 << 3
 KEY_STA       = 1 << 4
@@ -20,9 +20,10 @@ JOYPAD1       = $4016
 JOYPAD2       = $4017
 
 ; Programmer flags, for use with that "flags" variable in the zp
-TIMER_FLAG      = 1 << 0
-PAL_FADEIN      = 1 << 1    ; 0 = don't run fade engine, 1 = run fade engine
-PAL_FADEOUT     = 1 << 2    ; 0 = don't run fade engine, 1 = run fade engine
+RENDER_FLAG     = 1 << 0    ; 0 = frame not render ready, 1 = frame render ready
+TIMER_FLAG      = 1 << 1
+PAL_FADEIN      = 1 << 2    ; 0 = don't run fade engine, 1 = run fade engine
+PAL_FADEOUT     = 1 << 3    ; 0 = don't run fade engine, 1 = run fade engine
 
 ;------------;
 ;    N163    :
@@ -45,8 +46,8 @@ N163_NT1        =   $C800
 N163_NT2        =   $D000
 N163_NT3        =   $D800
 N163_PRGSEL0    =   $E000       ; 8K @ $8000-9FFF
-    AUDIO_YES   =   0 << 6      ; 0 = Enabled, 1 = Disabled   
-    AUDIO_NO    =   1 << 6 
+    AUDIO_YES   =   0 << 6      ; 0 = Enabled, 1 = Disabled
+    AUDIO_NO    =   1 << 6
 N163_PRGSEL1    =   $E800       ; 8K @ $A000-BFFF
     CHRRAM_EN0  =   0 << 6      ; Disable CHR-RAM at $0000-$0FFF
     CHRRAM_DIS0 =   1 << 6

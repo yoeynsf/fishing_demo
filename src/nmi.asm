@@ -1,7 +1,7 @@
 NMI:
     PHA                 ; preserve regs
-    TYA        
-    PHA       
+    TYA
+    PHA
     TXA
     PHA
 
@@ -12,14 +12,18 @@ NMI:
     ; STA s_PPUMASK
     ; STA PPUMASK
 
+    LDA flags
+    AND #RENDER_FLAG
+    BEQ @SkipRendering
+
     LDA #$00            ;Set the OAM address to 0
     STA OAMADDR
     LDA #$02            ;copy sprite data from $0200 into PPU memory
     STA OAMDMA
-    
+
     JSR load_palettes   ; copy palette buffer into palette RAM
 
-    LDA s_PPUCTRL       ; copy buffers into regs        
+    LDA s_PPUCTRL       ; copy buffers into regs
     STA PPUCTRL
     LDA s_PPUMASK
     STA PPUMASK
@@ -29,9 +33,9 @@ poll_joy:
     LDA #$01            ; poll the controller
     STA JOYPAD1
     LDA #$00
-    STA JOYPAD1         ; finish poll 
+    STA JOYPAD1         ; finish poll
     LDX #$08
-:   
+:
     LDA JOYPAD1
     LSR
     ROL joy_status
@@ -66,10 +70,10 @@ poll_joy:
     AND #PAL_FADEOUT
     BEQ :+
     JSR fadeout
-:   
+:
 
-    LDA #0
-    STA sprites_rendered
+@SkipRendering:
+
     INC framecounter
 
     ; debug: ft_music_play length measurement
@@ -86,7 +90,10 @@ poll_joy:
     ; AND #%00011110    ; remove emphasis and grayscale
     ; STA s_PPUMASK
     ; STA PPUMASK
-    
+
+    STA flags
+
+    STA sprites_rendered
     PLA
     TAX
     PLA       

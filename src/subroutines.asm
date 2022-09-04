@@ -1,10 +1,10 @@
 .proc sprite_prep
-	LDA OAMposAtFrame
-    CLC 
+    LDA OAMposAtFrame
+    CLC
     ADC #32
     STA currentOAMpos
     STA OAMposAtFrame
-	RTS
+    RTS
 .endproc
 
 .proc load_sprites
@@ -14,7 +14,7 @@ temp_y  = temp + 1
     LDY #0
     LDX currentOAMpos       ;We're about to render a sprite so get the next free one.
 :
-	LDA (pointer), Y         ;Y position
+    LDA (pointer), Y         ;Y position
     BMI donesprite
     CLC
     ADC temp_y
@@ -41,9 +41,9 @@ temp_y  = temp + 1
     JMP :-
     donesprite:
     STX currentOAMpos
-	RTS
-.endproc 
- 
+    RTS
+.endproc
+
 .proc clear_sprites
     LDA sprites_rendered
     CMP #64
@@ -60,18 +60,18 @@ temp_y  = temp + 1
     BNE Clear
 done:
     RTS
-.endproc 
+.endproc
 
 .proc load_nametable
-	LDY #0
-	LDX #4
+    LDY #0
+    LDX #4
 :
-	LDA (pointer), Y 
-	STA PPUDATA
-	INY
-	BNE :-	
-	INC pointer + 1
-	DEX
-	BNE :- 
-	RTS
-.endproc 
+    LDA (pointer), Y
+    STA PPUDATA
+    INY
+    BNE :-
+    INC pointer + 1
+    DEX
+    BNE :-
+    RTS
+.endproc

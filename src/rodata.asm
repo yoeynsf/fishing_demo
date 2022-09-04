@@ -2,7 +2,7 @@ palette_tablelow:               ; indexed into by the fade engine and whatever o
     .byte <palette_data0, <palette_data1
 palette_tablehigh:
     .byte >palette_data0, >palette_data1
-    
+
 palette_data0:
     .byte $0f, $0f, $0f, $0f
     .byte $0f, $0f, $0f, $0f

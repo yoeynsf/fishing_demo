@@ -33,7 +33,7 @@ temp_y  = temp + 1
     AND #KEY_A
     BNE :+
     LDA joy_status
-    AND #KEY_A  
+    AND #KEY_A
     BEQ :+
     LDX #ID_fish
     JSR spawn_entity
@@ -43,13 +43,13 @@ temp_y  = temp + 1
     AND #KEY_B
     BNE :+
     LDA joy_status
-    AND #KEY_B  
+    AND #KEY_B
     BEQ :+
     LDX #ID_fish
     JSR despawn_entity
 :
     JSR update_entity
-    
+
     ; debug: load_entity_sprites length measurement
     ; LDA s_PPUMASK
     ; AND #%00011111    ; remove emphasis
@@ -67,12 +67,17 @@ temp_y  = temp + 1
     ; STA PPUMASK
 
     JSR clear_sprites
-    
+
     ; debug: finish routine length measurement
     ; LDA s_PPUMASK
     ; AND #%00011110    ; remove emphasis and grayscale
     ; STA s_PPUMASK
     ; STA PPUMASK
+
+    ; this frame is now ready for rendering
+    LDA flags
+    ORA #RENDER_FLAG
+    STA flags
 
     LDA framecounter
 wait_vblank:

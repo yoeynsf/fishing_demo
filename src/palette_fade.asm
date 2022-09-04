@@ -22,59 +22,59 @@
     STA palette_pointer
     LDA palette_tablehigh, Y
     STA palette_pointer + 1
-    
-    LDY #$00				; palette buffer init
-	LDX #$10
+
+    LDY #$00                ; palette buffer init
+    LDX #$10
 :
-	LDA (palette_pointer), Y	
-	STA bgpalettes, Y
-	INY
-	DEX 
-	BNE :-
-	LDX #$00
-	LDY #$10
+    LDA (palette_pointer), Y
+    STA bgpalettes, Y
+    INY
+    DEX
+    BNE :-
+    LDX #$00
+    LDY #$10
 :
-	LDA (palette_pointer), Y
-	STA sprpalettes, X
-	INX
-	INY
-	CPX #$10
-	BNE :-
+    LDA (palette_pointer), Y
+    STA sprpalettes, X
+    INX
+    INY
+    CPX #$10
+    BNE :-
     RTS
 .endproc
 
 .proc load_palettes
     LDA PPUSTATUS
-	LDA #$3F
-	STA PPUADDR 
-	LDA #$00
-	STA PPUADDR
-	LDX #$00
+    LDA #$3F
+    STA PPUADDR
+    LDA #$00
+    STA PPUADDR
+    LDX #$00
     LDY #32
 :
-	LDA bgpalettes, X
-	STA PPUDATA
-	INX
-	DEY 
-	BNE :-
-	LDX #0
+    LDA bgpalettes, X
+    STA PPUDATA
+    INX
+    DEY
+    BNE :-
+    LDX #0
     LDY #32
 :
-	LDA sprpalettes, X
-	STA PPUDATA
-	INX
-	DEX
-	BNE :-
-	RTS	
+    LDA sprpalettes, X
+    STA PPUDATA
+    INX
+    DEX
+    BNE :-
+    RTS
 .endproc
 
 .proc fadeout_palette              ; X = Frame count
     STX palette_timer
-	STX palette_temp
-	LDA flags
-	ORA #PAL_FADEOUT
-	STA flags
-	JSR fadeout
+    STX palette_temp
+    LDA flags
+    ORA #PAL_FADEOUT
+    STA flags
+    JSR fadeout
     RTS
 .endproc
 
@@ -93,8 +93,8 @@
     RTS
 .endproc
 
-.proc fadeout                        ; set flag before running routine   
-    DEC palette_temp 
+.proc fadeout                        ; set flag before running routine
+    DEC palette_temp
 
     LDA palette_temp
     BEQ :+
@@ -108,19 +108,19 @@ check_color:
     BNE :+
     LDA #$0F
     STA bgpalettes, X
-    INX 
+    INX
     CPX #$10
     BEQ :++
     JMP check_color
 :
-    LDA bgpalettes, X 
-    SEC 
+    LDA bgpalettes, X
+    SEC
     SBC #$10
     STA bgpalettes, X
-    INX 
+    INX
     CPX #$10
     BEQ :+
-    JMP check_color 
+    JMP check_color
 :
     LDX #0
 check_spr_color:
@@ -129,26 +129,26 @@ check_spr_color:
     BNE :+
     LDA #$0F
     STA sprpalettes, X
-    INX 
+    INX
     CPX #$10
     BEQ done_interval
     JMP check_spr_color
 :
-    LDA sprpalettes, X 
-    SEC 
+    LDA sprpalettes, X
+    SEC
     SBC #$10
     STA sprpalettes, X
-    INX 
+    INX
     CPX #$10
     BEQ done_interval
-    JMP check_spr_color 
+    JMP check_spr_color
 
 done_interval:
     INC palette_interval
     LDA palette_interval
     CMP #4
     BEQ alldone
-    
+
     LDA palette_timer
     STA palette_temp
 
@@ -157,13 +157,13 @@ alldone:
     LDA #0
     STA palette_interval
     LDA flags
-    EOR #PAL_FADEOUT 
+    EOR #PAL_FADEOUT
     STA flags
     RTS
 .endproc
 
 .proc fadein
-    DEC palette_temp 
+    DEC palette_temp
     LDA palette_temp
     BEQ :+
     RTS
@@ -172,10 +172,10 @@ alldone:
     BNE no_prep
     LDY #0
 :
-    LDA (palette_pointer), Y                ; get the low nibble, and store it into the buffer. 
+    LDA (palette_pointer), Y                ; get the low nibble, and store it into the buffer.
     AND #%00001111
     STA bgpalettes, Y
-    INY 
+    INY
     CPY #$20
     BNE :-
 no_prep:
@@ -190,15 +190,15 @@ check_bg:
     BEQ :+
 
     LDA bgpalettes, Y
-    CLC 
+    CLC
     ADC #$10
     STA bgpalettes, Y
-    INY 
+    INY
     CPY #$10
     BEQ :++
     JMP check_bg
 :
-    INY 
+    INY
     CPY #$10
     BEQ :+
     JMP check_bg
@@ -209,16 +209,16 @@ check_spr_color:
     LDA sprpalettes, X
     CMP (palette_pointer), Y
     BEQ :+
-    CLC 
+    CLC
     ADC #$10
     STA sprpalettes, X
     INY
-    INX 
+    INX
     CPX #$10
     BEQ done_interval
     JMP check_spr_color
 :
-    INY 
+    INY
     INX
     CPX #$10
     BEQ done_interval
@@ -229,7 +229,7 @@ done_interval:
     LDA palette_interval
     CMP #4
     BEQ alldone
-    
+
     LDA palette_timer
     STA palette_temp
 
@@ -237,8 +237,8 @@ done_interval:
 alldone:
     LDA #0
     STA palette_interval
-    LDA flags 
-    EOR #PAL_FADEIN 
+    LDA flags
+    EOR #PAL_FADEIN
     STA flags
     RTS
 .endproc
