@@ -17,9 +17,16 @@ mainprep:           ; any vars that need to be set up before can be done in here
 temp_x  = temp      ; defines for sprite loader. not interpreted as code or nuthin
 temp_y  = temp + 1
 ;----------------------------------------------------------------------
-	LDA #$00
-	TAX
-	TAY
+    ; debug: main length measurement
+    ; LDA s_PPUMASK
+    ; AND #%00011111    ; remove emphasis
+    ; ORA #%11100001    ; black emphasis, grayscale
+    ; STA s_PPUMASK
+    ; STA PPUMASK
+
+    LDA #$00
+    TAX
+    TAY
     JSR sprite_prep
 
     LDA joy_held
@@ -42,14 +49,35 @@ temp_y  = temp + 1
     JSR despawn_entity
 :
     JSR update_entity
+    
+    ; debug: load_entity_sprites length measurement
+    ; LDA s_PPUMASK
+    ; AND #%00011111    ; remove emphasis
+    ; ORA #%00100001    ; red emphasis, grayscale
+    ; STA s_PPUMASK
+    ; STA PPUMASK
+
     JSR load_entity_sprites
 
-    JSR clear_sprites
+    ; debug: clear_sprites length measurement
+    ; LDA s_PPUMASK
+    ; AND #%00011111    ; remove emphasis
+    ; ORA #%01000001    ; green emphasis, grayscale
+    ; STA s_PPUMASK
+    ; STA PPUMASK
 
-	LDA framecounter
+    JSR clear_sprites
+    
+    ; debug: finish routine length measurement
+    ; LDA s_PPUMASK
+    ; AND #%00011110    ; remove emphasis and grayscale
+    ; STA s_PPUMASK
+    ; STA PPUMASK
+
+    LDA framecounter
 wait_vblank:
-	CMP framecounter	; NMI will modify this and the branch will happen
-	BEQ wait_vblank
-	JMP main
+    CMP framecounter    ; NMI will modify this and the branch will happen
+    BEQ wait_vblank
+    JMP main
 .endproc
 ;----------------------------------------------------------------------
