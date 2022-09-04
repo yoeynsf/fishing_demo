@@ -16,7 +16,7 @@ NMI:
 
     LDA flags
     AND #RENDER_FLAG
-    BEQ @SkipRendering
+    BEQ SkipRendering
 
     LDA #$00            ;Set the OAM address to 0
     STA OAMADDR
@@ -74,7 +74,7 @@ poll_joy:
     JSR fadeout
 :
 
-@SkipRendering:
+SkipRendering:
 
     INC framecounter
 
