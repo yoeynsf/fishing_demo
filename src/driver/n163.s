@@ -235,9 +235,9 @@ ft_update_n163:
 	asl a
 	rol var_Temp3
 	rol var_Temp4
-	; asl a
-	; rol var_Temp3
-	; rol var_Temp4
+	asl a
+	rol var_Temp3
+	rol var_Temp4
 	sta var_Temp2		;;; ;; ;
 
 .if 0
