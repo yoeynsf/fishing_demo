@@ -12,6 +12,10 @@ Reset:
 :
     BIT PPUSTATUS
     BPL :-          ;wait vblank
+
+:
+    BIT PPUSTATUS
+    BPL :-          ;wait vblank again, to ensure PPU warmup
     TXA
 CLEARMEM:
     STA $0000, X
