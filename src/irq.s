@@ -1,3 +1,8 @@
+.export IRQ
+
+.include "defines.inc"
+.segment "FIXEDBANK"
+
 IRQ:
     PHA         
     TYA        

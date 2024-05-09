@@ -1,3 +1,13 @@
+.export Reset
+
+.importzp s_PPUCTRL, s_PPUMASK, pointer
+.import mainprep, load_nametable, load_palette_buffer, load_palettes
+.import fish_nam, blank_nam
+
+
+.include "defines.inc"
+.segment "FIXEDBANK"
+
 Reset:
 	SEI 			; disables interrupts
 	CLD 			; disable decimal mode

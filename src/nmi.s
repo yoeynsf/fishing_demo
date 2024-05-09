@@ -1,3 +1,10 @@
+.export NMI
+
+.importzp s_PPUCTRL, s_PPUMASK, joy_status, joy_held, flags, framecounter, sprites_rendered, timer
+.import load_palettes, fadein, fadeout, ft_music_play
+.include "defines.inc"
+.segment "FIXEDBANK"
+
 NMI:
     PHA                 ; preserve regs
     TYA        

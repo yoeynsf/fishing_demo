@@ -1,3 +1,11 @@
+.export mainprep
+
+.importzp song_pointer, joy_held, joy_status, framecounter, temp
+.import spawn_entity, despawn_entity, update_entity, load_entity_sprites, clear_sprites, song_bank0, ID_fish, ft_music_init, fadein_palette, sprite_prep
+
+.include "defines.inc"
+.segment "FIXEDBANK"
+
 mainprep:           ; any vars that need to be set up before can be done in here
 
     LDA #<song_bank0
@@ -35,7 +43,7 @@ temp_y  = temp + 1
     LDA joy_status
     AND #KEY_A  
     BEQ :+
-    LDX #ID_fish
+    LDX #1
     JSR spawn_entity
 :
 
@@ -45,7 +53,7 @@ temp_y  = temp + 1
     LDA joy_status
     AND #KEY_B  
     BEQ :+
-    LDX #ID_fish
+    LDX #1
     JSR despawn_entity
 :
     JSR update_entity

@@ -1,3 +1,8 @@
+.include "defines.inc"
+.export fadein, fadeout, load_palette_buffer, load_palettes, bgpalettes, sprpalettes, fadein_palette, fadeout_palette
+.importzp flags
+.import palette_tablelow, palette_tablehigh
+.globalzp palette_timer, palette_pointer, palette_interval
 ;---------------------------------------;
 ;   See defines.inc for flags           ;
 ;   and header.asm for zeropage         ;
@@ -17,6 +22,18 @@
 ;   fades actually run.                 ;
 ;---------------------------------------;
 
+.segment "ZEROPAGE"
+palette_timer:                  .res 1  ; argument into the fade routine. Stores the delay
+palette_pointer:                .res 2  ; pointer so the fade-in knows what colors to go to
+palette_interval:               .res 1  ; which step of the fade we're at
+palette_temp:                   .res 1  ; used by palette fade out timer
+palette_temp2:                  .res 1  ; palette fade in scratch space
+
+.segment "INTERNALRAM"      ; actual free space is $0300-07FF (see config)
+bgpalettes:						.res 16 ; palette buffer (loaded every frame)
+sprpalettes:					.res 16
+
+.segment "FIXEDBANK"
 .proc load_palette_buffer
     LDA palette_tablelow, Y
     STA palette_pointer
